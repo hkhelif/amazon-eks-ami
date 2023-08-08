@@ -187,12 +187,9 @@
       ]
     },
     {
-      "type": "ansible",
-      "user": "ec2-user",
-      "playbook_file": "{{template_dir}}/playbooks/home_config.yml",
-      "ansible_env_vars": [
-      "ANSIBLE_REMOTE_TMP=/tmp"
-      ]
+      "type": "shell",
+      "remote_folder": "{{ user `remote_folder`}}",
+      "script": "{{template_dir}}/scripts/edit-volume.sh"
     },
     {
       "type": "shell",
