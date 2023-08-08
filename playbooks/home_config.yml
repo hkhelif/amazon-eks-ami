@@ -1,0 +1,58 @@
+##
+# home_config.yml
+# Playbook to configure the /home directory on separate partition.
+##
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: false
+  tasks:
+    - name: '1.1.3 | Format new volume'
+      filesystem: fstype=xfs dev=/dev/xvdf
+      debuger: always
+
+    - name: '1.1.3 | Mount new volume'
+      mount:
+        path: /mnt/home
+        src: /dev/xvdf
+        fstype: xfs
+        state: mounted
+
+    - name: '1.1.3 | Copy existing home directory'
+      copy:
+        src: /home/
+        dest: /mnt/home/
+        remote_src: true
+
+    - name: '1.1.3 | Unmount new volume'
+      mount:
+        path: /mnt/home
+        state: absent
+
+    - name: '1.1.3 | Remove old home directory'
+      command: rm -rf /home
+      args:
+        chdir: /
+
+    - name: '1.1.3 | Create new home directory'
+      file:
+        path: /home
+        state: directory
+
+    - name: '1.1.3 | Mount new volume to home directory'
+      mount:
+        path: /home
+        src: /dev/xvdf
+        fstype: xfs
+        opts: nodev
+        state: mounted
+
+    - name: '1.1.3 | Set /home directory permissions'
+      file:
+        path: /home/ec2-user
+        state: directory
+        recurse: true
+        owner: ec2-user
+        group: ec2-user
+        mode: '0700'

@@ -70,11 +70,17 @@
           "volume_type": "{{user `volume_type`}}",
           "volume_size": "{{user `launch_block_device_mappings_volume_size`}}",
           "delete_on_termination": true
+        },
+        {
+          "device_name": "/dev/xvdf",
+          "volume_type": "{{user `volume_type`}}",
+          "volume_size": "{{user `launch_block_device_mappings_volume_size`}}",
+          "delete_on_termination": true
         }
       ],
       "ami_block_device_mappings": [
         {
-          "device_name": "/dev/xvda",
+          "device_name": "/dev/xvdf",
           "volume_type": "{{user `volume_type`}}",
           "volume_size": 20,
           "delete_on_termination": true
@@ -178,6 +184,14 @@
         "CACHE_CONTAINER_IMAGES={{user `cache_container_images`}}",
         "WORKING_DIR={{user `working_dir`}}",
         "SSM_AGENT_VERSION={{user `ssm_agent_version`}}"
+      ]
+    },
+    {
+      "type": "ansible",
+      "user": "ec2-user",
+      "playbook_file": "{{template_dir}}/playbooks/home_config.yml",
+      "ansible_env_vars": [
+      "ANSIBLE_REMOTE_TMP=/tmp"
       ]
     },
     {
