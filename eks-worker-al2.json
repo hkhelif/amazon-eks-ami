@@ -130,13 +130,6 @@
     {
       "type": "shell",
       "remote_folder": "{{ user `remote_folder`}}",
-      "script": "{{template_dir}}/scripts/edit-volume.sh",
-      "execute_command": "sudo sh '{{.Path}}'"
-
-    },
-    {
-      "type": "shell",
-      "remote_folder": "{{ user `remote_folder`}}",
       "script": "{{template_dir}}/scripts/install_additional_repos.sh",
       "environment_vars": [
         "ADDITIONAL_YUM_REPOS={{user `additional_yum_repos`}}"
@@ -228,6 +221,13 @@
       "direction": "download",
       "source": "{{user `working_dir`}}/version-info.json",
       "destination": "{{ user `ami_name` }}-version-info.json"
+    },
+    {
+      "type": "shell",
+      "remote_folder": "{{ user `remote_folder`}}",
+      "script": "{{template_dir}}/scripts/edit-volume.sh",
+      "execute_command": "sudo sh '{{.Path}}'"
+
     },
     {
       "type": "shell",
