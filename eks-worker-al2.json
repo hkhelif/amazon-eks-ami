@@ -130,6 +130,13 @@
     {
       "type": "shell",
       "remote_folder": "{{ user `remote_folder`}}",
+      "script": "{{template_dir}}/scripts/edit-volume.sh",
+      "execute_command": "sudo sh '{{.Path}}'"
+
+    },
+    {
+      "type": "shell",
+      "remote_folder": "{{ user `remote_folder`}}",
       "script": "{{template_dir}}/scripts/install_additional_repos.sh",
       "environment_vars": [
         "ADDITIONAL_YUM_REPOS={{user `additional_yum_repos`}}"
@@ -185,11 +192,6 @@
         "WORKING_DIR={{user `working_dir`}}",
         "SSM_AGENT_VERSION={{user `ssm_agent_version`}}"
       ]
-    },
-    {
-      "type": "shell",
-      "remote_folder": "{{ user `remote_folder`}}",
-      "script": "{{template_dir}}/scripts/edit-volume.sh"
     },
     {
       "type": "shell",
