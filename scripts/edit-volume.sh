@@ -37,7 +37,6 @@ mount -t xfs -o nodev /dev/xvdf /home
 
 # 1.1.3 | Set /home directory permissions
 echo "Setting permissions for /home/ec2-user"
-mkdir -p /home/ec2-user
 chown ec2-user:ec2-user /home/ec2-user
 chmod 0700 /home/ec2-user
 
